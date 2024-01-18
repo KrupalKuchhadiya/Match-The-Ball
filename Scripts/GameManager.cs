@@ -32,7 +32,6 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        Counter = PlayerPrefs.GetInt("Level",Counter);
         for(int i = 0; i < LevelList.Count; i++)
         {
             if(i == Counter)
@@ -222,20 +221,23 @@ public class GameManager : MonoBehaviour
         if (WinList.Count == SelectTubes.Count)
         {
             Counter++;
-            PlayerPrefs.SetInt("Level", Counter);
             if(Counter >= 2)
             {
-                SceneManager.LoadScene(0);
+                Debug.Log("Counter ++");
+                //SceneManager.LoadScene(0);
+                LevelList[0].SetActive(false);
+                LevelList[1].SetActive(true);
             }
             else if(Counter == 3)
             {
+                Debug.Log("Counter ---");
                 SceneManager.LoadScene("3To5Level");
             }
-            Debug.Log("Game Thai Gai Bhai Raja Le Hve!!!!!!!!!!!!");
+            Debug.Log("Game Is Over");
         }
         else
         {
-            Debug.Log("gAME pURI nTHItHA bHAY");
+            Debug.Log("Game Is Not Over");
         }
     }
 }
