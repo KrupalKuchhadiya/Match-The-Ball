@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> GlobTubeArray;
     public int Counter = 0;
     public List<GameObject> LevelList;
+    public GameObject GameOverPanel,GameWinPanel;
 
     private void Awake()
     {
@@ -184,7 +185,7 @@ public class GameManager : MonoBehaviour
     }
     public void CheckMethod()
     {
-        for (int i = 0; i < Tubes.Count; i++)
+        for (int i = 0; i < SelectTubes.Count; i++)
         {
 
 
@@ -196,11 +197,11 @@ public class GameManager : MonoBehaviour
                     {
                         if (GlobTubeArray[i].transform.GetChild(5).transform.tag == GlobTubeArray[i].transform.GetChild(8).transform.tag)
                         {
-                           
-                           
+
+                            GameWinPanel.SetActive(true);
                             WinList.Add(GlobTubeArray[i]);
                             GlobTubeArray.Remove(GlobTubeArray[i]);
-                            quicktest();
+                            QuickTest();
                         }
                     }
                 }
@@ -216,28 +217,36 @@ public class GameManager : MonoBehaviour
 
     }
 
-    void quicktest()
+    void QuickTest()
     {
         if (WinList.Count == SelectTubes.Count)
         {
-            Counter++;
-            if(Counter >= 2)
-            {
-                Debug.Log("Counter ++");
-                //SceneManager.LoadScene(0);
-                LevelList[0].SetActive(false);
-                LevelList[1].SetActive(true);
-            }
-            else if(Counter == 3)
-            {
-                Debug.Log("Counter ---");
-                SceneManager.LoadScene("3To5Level");
-            }
+            //Counter++;
+            //if(Counter >= 2)
+            //{
+            //    Debug.Log("Counter ++");
+            //    //SceneManager.LoadScene(0);
+            //    LevelList[0].SetActive(false);
+            //    LevelList[1].SetActive(true);
+            //}
+            //else if(Counter == 3)
+            //{
+            //    Debug.Log("Counter ---");
+            //    SceneManager.LoadScene("3To5Level");
+            //}
+            PlayerPref.pref.RefreshData();
             Debug.Log("Game Is Over");
+            GameWinPanel.SetActive(true);
+
         }
         else
         {
             Debug.Log("Game Is Not Over");
         }
+    }
+
+    public void AllLevelPanelOpen()
+    {
+        SceneManager.LoadScene("AllLevelScene");
     }
 }
