@@ -21,8 +21,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     List<Color> ListName;
     public List<GameObject> WinList;
-    GameObject GlobClickedObject;
-    public List<GameObject> GlobTubeArray;
+    //public List<GameObject> WinList;
     public int Counter = 0;
     public List<GameObject> LevelList;
     public GameObject GameOverPanel,GameWinPanel;
@@ -83,10 +82,6 @@ public class GameManager : MonoBehaviour
         List<Color> shuffledColors = BallColors.OrderBy(x => Random.value).ToList();
         List<string> shuffledTag = BallTags.OrderBy(x => Random.value).ToList();
         //ListName = ListName.Add(BallColors);
-        ////for (int i = 0; i < SelectBall.Count; i++)
-        ////{
-        ////    int val = Random.Range(0, BallColors.Length);
-        ////    UsedColor.Add(BallColors[val]);
         ////    do
         ////    {
         ////        for (int j = 0; j < 4; j++)
@@ -98,10 +93,7 @@ public class GameManager : MonoBehaviour
 
         ////        }
         ////    } while (UsedColor[val] == BallColors[val]);
-        ////}
-
-
-        for (int i = 0; i < SelectBall.Count; i++)
+        for (int i = 0; i < SelectTubes.Count; i++)
         {
             for (int j = 0; j < 4; j++)
             {
@@ -111,14 +103,9 @@ public class GameManager : MonoBehaviour
                 SelectBall.RemoveAt(randomValue);
             }
         }
-
-
     }
     public void BallMoveMethod(GameObject ClickedObjct)
     {
-        GlobClickedObject = ClickedObjct;
-
-
         if (!flag)
         {
             if (ClickedObjct.transform.childCount > 5)
@@ -127,21 +114,23 @@ public class GameManager : MonoBehaviour
                 FirstClicked.transform.GetChild(FirstClicked.transform.childCount - 1).transform.position = FirstClicked.transform.GetChild(4).transform.position;
                 flag = true;
             }
-
-            
         }
         else
         {
+            SecondClicked = ClickedObjct;
             if (ClickedObjct.transform.childCount >= 9)
             {
-
                 FirstClicked.transform.GetChild(FirstClicked.transform.childCount - 1).transform.position = FirstClicked.transform.GetChild(FirstClicked.transform.childCount - 6).transform.position;
                 flag = false;
                 if (ClickedObjct.transform.childCount >= 9)
                 {
-                    GlobTubeArray.Add(ClickedObjct);
+                    if (ClickedObjct.transform.GetChild(5).tag == ClickedObjct.transform.GetChild(6).tag &&
+                        ClickedObjct.transform.GetChild(5).tag == ClickedObjct.transform.GetChild(7).tag &&
+                        ClickedObjct.transform.GetChild(5).tag == ClickedObjct.transform.GetChild(8).tag)
+                    {
+                        WinList.Add(ClickedObjct);
+                    }
                 }
-
             }
             else if (ClickedObjct.transform.childCount == 5)
             {
@@ -151,13 +140,16 @@ public class GameManager : MonoBehaviour
                 flag = false;
                 if (ClickedObjct.transform.childCount >= 9)
                 {
-                    GlobTubeArray.Add(ClickedObjct);
+                    if (ClickedObjct.transform.GetChild(5).tag == ClickedObjct.transform.GetChild(6).tag &&
+                        ClickedObjct.transform.GetChild(5).tag == ClickedObjct.transform.GetChild(7).tag &&
+                        ClickedObjct.transform.GetChild(5).tag == ClickedObjct.transform.GetChild(8).tag)
+                    {
+                        WinList.Add(ClickedObjct);
+                    }
                 }
-
             }
             else
             {
-
                 SecondClicked = ClickedObjct;
                 if (SecondClicked.transform.GetChild(SecondClicked.transform.childCount - 1).tag == FirstClicked.transform.GetChild(FirstClicked.transform.childCount - 1).tag)
                 {
@@ -165,7 +157,12 @@ public class GameManager : MonoBehaviour
                     SecondClicked.transform.GetChild(SecondClicked.transform.childCount - 1).transform.position = SecondClicked.transform.GetChild(SecondClicked.transform.childCount - 6).transform.position;
                     if (ClickedObjct.transform.childCount >= 9)
                     {
-                        GlobTubeArray.Add(ClickedObjct);
+                        if (ClickedObjct.transform.GetChild(5).tag == ClickedObjct.transform.GetChild(6).tag &&
+                            ClickedObjct.transform.GetChild(5).tag == ClickedObjct.transform.GetChild(7).tag &&
+                            ClickedObjct.transform.GetChild(5).tag == ClickedObjct.transform.GetChild(8).tag)
+                        {
+                            WinList.Add(ClickedObjct);
+                        }
                     }
                     flag = false;
                 }
@@ -174,70 +171,32 @@ public class GameManager : MonoBehaviour
                     FirstClicked.transform.GetChild(FirstClicked.transform.childCount - 1).transform.position = FirstClicked.transform.GetChild(FirstClicked.transform.childCount - 6).transform.position;
                     if (ClickedObjct.transform.childCount >= 9)
                     {
-                        GlobTubeArray.Add(ClickedObjct);
+                       if(ClickedObjct.transform.GetChild(5).tag == ClickedObjct.transform.GetChild(6).tag  &&
+                          ClickedObjct.transform.GetChild(5).tag == ClickedObjct.transform.GetChild(7).tag  &&
+                          ClickedObjct.transform.GetChild(5).tag == ClickedObjct.transform.GetChild(8).tag)
+                       {
+                         WinList.Add(ClickedObjct);
+                       }
+                        
                     }
                     flag = false;
                 }
-
             }
         }
         CheckMethod();
     }
     public void CheckMethod()
     {
-        for (int i = 0; i < SelectTubes.Count; i++)
-        {
-
-
-            if (GlobTubeArray[i].transform.childCount == 9)
-            {
-                if (GlobTubeArray[i].transform.GetChild(5).transform.tag == GlobTubeArray[i].transform.GetChild(6).transform.tag)
-                {
-                    if (GlobTubeArray[i].transform.GetChild(5).transform.tag == GlobTubeArray[i].transform.GetChild(7).transform.tag)
-                    {
-                        if (GlobTubeArray[i].transform.GetChild(5).transform.tag == GlobTubeArray[i].transform.GetChild(8).transform.tag)
-                        {
-
-                            GameWinPanel.SetActive(true);
-                            WinList.Add(GlobTubeArray[i]);
-                            GlobTubeArray.Remove(GlobTubeArray[i]);
-                            QuickTest();
-                        }
-                    }
-                }
-            }
-            else
-            {
-                GlobTubeArray.Remove(GlobTubeArray[i]);
-                Debug.Log("Game Is Running");
-            }
-        }
-
-      
-
-    }
-
-    void QuickTest()
-    {
         if (WinList.Count == SelectTubes.Count)
         {
-            //Counter++;
-            //if(Counter >= 2)
-            //{
-            //    Debug.Log("Counter ++");
-            //    //SceneManager.LoadScene(0);
-            //    LevelList[0].SetActive(false);
-            //    LevelList[1].SetActive(true);
-            //}
-            //else if(Counter == 3)
-            //{
-            //    Debug.Log("Counter ---");
-            //    SceneManager.LoadScene("3To5Level");
-            //}
-            PlayerPref.pref.RefreshData();
-            Debug.Log("Game Is Over");
+            for(int i = 0;i < Tubes.Count;i++)
+            {
+              Tubes[i].GetComponent<MeshCollider>().enabled = false;
+            }
+            Debug.Log("Game Is Over" );
             GameWinPanel.SetActive(true);
-
+            PlayerPrefScript.pref.Value++;
+            PlayerPrefScript.pref.RefreshData();
         }
         else
         {

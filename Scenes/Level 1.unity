@@ -3048,7 +3048,6 @@ MonoBehaviour:
   - Cyan
   - Pink
   WinList: []
-  GlobTubeArray: []
   Counter: 0
   LevelList:
   - {fileID: 181879067}

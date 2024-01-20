@@ -436,6 +436,7 @@ MonoBehaviour:
   - {fileID: 371589303}
   - {fileID: 1650042499}
   - {fileID: 2122196077}
+  Value: 0
 --- !u!4 &587138244
 Transform:
   m_ObjectHideFlags: 0
@@ -1045,11 +1046,11 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1751136946}
-  - {fileID: 1983710442}
-  - {fileID: 371589302}
-  - {fileID: 1650042498}
   - {fileID: 2122196076}
+  - {fileID: 1650042498}
+  - {fileID: 371589302}
+  - {fileID: 1983710442}
+  - {fileID: 1751136946}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
